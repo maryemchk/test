@@ -1,47 +1,41 @@
 import pytest
-from add import add
-from multiply import multiply
-from divide import divide
 
-def test_add_zero():
-    assert add(1, 0) == 1
-    assert add(0, 1) == 1
+def test_add_valid_cases():
+    assert add(2, 3) == 5
+    assert add(-1, 4) == -5
+    assert add(0, 0) == 0
 
-def test_add_positive():
-    assert add(5, 2) == 7
-    assert add(-3, -4) == -7
+@pytest.mark.parametrize("a, b, expected", [
+    (-2, 2, 0),
+    (10, -5, 2),
+    (3.14, 2, 1.57)
+])
+def test_add_invalid_cases(a, b, expected):
+    with pytest.raises(ValueError):
+        add(a, b)
 
-def test_add_negative():
-    assert add(-5, -2) == -7
-    assert add(0, -1) == -1
-
-def test_multiply():
-    assert multiply(2, 3) == 6
-    assert multiply(-2, -3) == 6
+def test_multiply_valid_cases():
     assert multiply(4, 5) == 20
+    assert multiply(-6, -7) == 42
+    assert multiply(9, 3.14) == 28.26
 
-def test_multiply_zero():
-    assert multiply(2, 0) == 0
-    assert multiply(0, 2) == 0
-    assert multiply(-2, 0) == 0
+@pytest.mark.parametrize("a, b, expected", [
+    (2, 0, 1),
+    (-10, 3, -13)
+])
+def test_multiply_invalid_cases(a, b, expected):
+    with pytest.raises(ValueError):
+        multiply(a, b)
 
-def test_multiply_negative():
-    assert multiply(-2, -3) == 6
-    assert multiply(-4, -5) == 20
-    assert multiply(0, -1) == 0
-
-def test_divide_positive():
+def test_divide_valid_cases():
     assert divide(10, 2) == 5.0
-    assert divide(15, 3) == 5.0
-    assert divide(-5, 0) == ValueError("Cannot divide by zero")
+    assert divide(-11, 1) == -11.0
+    assert divide(9.14, 3.14) == 2.9000305173741878
 
-def test_divide_negative():
-    assert divide(-20, -4) == 5.0
-    assert divide(-35, -5) == 7.0
-    assert divide(0, 0) == float('inf')
-
-def test_divide_zero():
+@pytest.mark.parametrize("a, b, expected", [
+    (4, 0, float('inf')),
+    (-10, 3, -33.333333333333332)
+])
+def test_divide_invalid_cases(a, b, expected):
     with pytest.raises(ValueError):
-        divide(10, 0)
-    with pytest.raises(ValueError):
-        divide(15, 3)
+        divide(a, b)

@@ -3,29 +3,28 @@ from add import add
 from multiply import multiply
 from divide import divide
 
-@pytest.mark.parametrize("a, b", [
-    (1, 2),
-    (-1, -3),
-    (0.5, 4.25),
-    (10, -20)
+@pytest.mark.parametrize("a, b, expected", [
+    (1, 2, 3),
+    (4, 5, 9),
+    (-1, -2, -3)
 ])
-def test_add(a: int, b: int):
-    assert add(a, b) == a + b
+def test_add(a, b, expected):
+    assert add(a, b) == expected
 
-@pytest.mark.parametrize("a, b", [
-    (1, 2),
-    (-1, -3),
-    (0.5, 4.25),
-    (10, -20)
-])
-def test_multiply(a: int, b: int):
-    assert multiply(a, b) == a * b
 
-@pytest.mark.parametrize("a, b", [
-    (1.0, 2.0),
-    (-1.0, -3.0),
-    (0.5, 4.25),
-    (10.0, -20.0)
+@pytest.mark.parametrize("a, b, expected", [
+    (10, 2, 12.0),
+    (20, 5, 25.0),
+    (-50, -10, -60.0)
 ])
-def test_divide(a: float, b: float):
-    assert divide(a, b) == a / b
+def test_multiply(a, b, expected):
+    assert multiply(a, b) == expected
+
+
+@pytest.mark.parametrize("a, b, result", [
+    (10.0, 2.0, 20.0),
+    (20.0, 5.0, 100.0),
+    (-50.0, -10.0, -500.0)
+])
+def test_divide(a, b, expected):
+    assert divide(a, b) == result

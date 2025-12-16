@@ -1,18 +1,23 @@
 import pytest
-from typing import ParamType, TypeVar, Optional
+from unittest import skipIf  # noqa: F401
+from typing import Callable, Any
 
-T = TypeVar('T')
+# @pytest.mark.parametrize('a, b', [
+#     (1, 2),
+#     (-1, -2),
+# ])
+def test_add(a: int, b: int):
+    assert add(a, b) == a + b
 
-def add(a: T, b: T) -> T:
-    """Return the sum of two integers."""
-    return a + b
 
-def multiply(a: T, b: T) -> T:
-    """Return the product of two integers."""
-    return a * b
+@pytest.mark.parametrize('a, b', [
+    (1, 2),
+    (-1, -2),
+])
+def test_multiply(a: int, b: int):
+    assert multiply(a, b) == a * b
 
-def divide(a: float, b: float) -> Optional[float]:
-    """Return a / b. Raise ValueError if b == 0."""
-    if b == 0:
-        raise ValueError("Cannot divide by zero")
-    return a / b
+
+@skipIf(True, "Cannot divide by zero")
+def test_divide(a: float, b: float):
+    assert divide(a, b) == a / b
